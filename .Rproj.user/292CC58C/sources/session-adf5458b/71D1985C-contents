@@ -1,0 +1,42 @@
+---
+title: "World Happiness Report 2024 Analysis"
+author: "Ali Musavi"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Dataset
+
+```{r}
+data <- read.csv("WHR2024.csv")
+```
+
+## Display First 5 Rows
+
+```{r}
+head(data, n = 5)
+```
+
+## Summary Statistics
+
+```{r}
+summary(data)
+```
+
+## Identify Missing Values
+
+```{r}
+missing_values <- colSums(is.na(data))
+print("Missing values per column:")
+print(missing_values)
+```
+
+## Save Cleaned Dataset
+
+```{r}
+write.csv(data, "cleaned_happiness.csv", row.names = FALSE)
+cat("Cleaned dataset saved as cleaned_happiness.csv in the working directory.\n")

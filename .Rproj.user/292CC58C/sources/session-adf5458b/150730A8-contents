@@ -1,0 +1,45 @@
+---
+title: "Climate Change Analysis"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Introduction
+This report analyzes global temperature changes using the Climate Change: Earth Surface Temperature dataset.
+
+## Load Required Libraries
+```{r setup, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+
+data <- read.csv("GlobalTemperatures.csv")
+head(data, n = 5)  # Preview first 5 rows
+
+# Convert dt column to Date type
+data$dt <- as.Date(data$dt)
+
+# Remove missing values
+data <- na.omit(data)
+
+temperature_plot <- ggplot(data, aes(x = dt, y = LandAverageTemperature)) +
+  geom_line(color = "blue") +
+  labs(title = "Global Temperature Change Over Time",
+       x = "Year",
+       y = "Average Land Temperature (°C)") +
+  theme_minimal()
+
+# Show the plot
+print(temperature_plot)
+ggsave("temperature_trend.png", plot = temperature_plot, width = 8, height = 5)
+
+scatter_plot <- ggplot(data, aes(x = dt, y = LandAverageTemperature)) +
+  geom_point(color = "red", alpha = 0.6) +
+  labs(title = "Date vs Land Average Temperature",
+       x = "Date",
+       y = "Land Average Temperature") +
+  theme_minimal()
+
+# Show the scatter plot
+print(scatter_plot)
+ggsave("co2_vs_temp.png", plot = scatter_plot, width = 8, height = 5)
